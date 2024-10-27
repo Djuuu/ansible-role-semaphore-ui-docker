@@ -1,0 +1,78 @@
+---
+
+docker_project_name: "{{ semaphore_project_name }}"
+
+semaphore_env:
+
+  - { option: 'SEMAPHORE_VERSION', var: "semaphore_version" }
+
+  - { option: 'USER_ID',  var: "ansible_user_uid" }
+  - { option: 'GROUP_ID', var: "ansible_user_gid" }
+
+  - { option: 'SEMAPHORE_PORT',       var: "semaphore_port" }
+  - { option: 'SEMAPHORE_INTERFACE',  var: "semaphore_interface" }
+  - { option: 'SEMAPHORE_TMP_PATH',   var: "semaphore_tmp_path" }
+  - { option: 'SEMAPHORE_GIT_CLIENT', var: "semaphore_git_client" }
+  - { option: 'SEMAPHORE_WEB_ROOT',   var: "semaphore_web_root" }
+
+  - { option: 'SEMAPHORE_DB_DIALECT', var: "semaphore_db_dialect" }
+  - { option: 'SEMAPHORE_DB_HOST',    var: "semaphore_db_host" }
+  - { option: 'SEMAPHORE_DB_PORT',    var: "semaphore_db_port" }
+  - { option: 'SEMAPHORE_DB',         var: "semaphore_db" }
+  - { option: 'SEMAPHORE_DB_USER',    var: "semaphore_db_user" }
+  - { option: 'SEMAPHORE_DB_PASS',    var: "semaphore_db_pass" }
+
+  - { option: 'SEMAPHORE_COOKIE_HASH',           var: "semaphore_cookie_hash" }
+  - { option: 'SEMAPHORE_COOKIE_ENCRYPTION',     var: "semaphore_cookie_encryption" }
+  - { option: 'SEMAPHORE_ACCESS_KEY_ENCRYPTION', var: "semaphore_access_key_encryption" }
+
+  - { option: 'SEMAPHORE_TIMEZONE', var: "semaphore_timezone" }
+
+  - { option: 'SEMAPHORE_ADMIN_NAME',     var: "semaphore_admin_name" }
+  - { option: 'SEMAPHORE_ADMIN_EMAIL',    var: "semaphore_admin_email" }
+  - { option: 'SEMAPHORE_ADMIN',          var: "semaphore_admin" }
+  - { option: 'SEMAPHORE_ADMIN_PASSWORD', var: "semaphore_admin_password" }
+
+  - { option: 'ANSIBLE_HOST_KEY_CHECKING',    var: "semaphore_ansible_host_key_checking" }
+  - { option: 'SEMAPHORE_ENV_VARS',           var: "semaphore_env_vars_json" }
+  - { option: 'SEMAPHORE_FORWARDED_ENV_VARS', var: "semaphore_forwarded_env_vars_json" }
+
+  - { option: 'SEMAPHORE_MAX_TASK_DURATION_SEC',        var: "semaphore_max_task_duration_sec" }
+  - { option: 'SEMAPHORE_MAX_TASKS_PER_TEMPLATE',       var: "semaphore_max_tasks_per_template" }
+  - { option: 'SEMAPHORE_MAX_PARALLEL_TASKS',           var: "semaphore_max_parallel_tasks" }
+
+  - { option: 'SEMAPHORE_PASSWORD_LOGIN_DISABLED',      var: "semaphore_password_login_disabled" }
+  - { option: 'SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT', var: "semaphore_non_admin_can_create_project" }
+  - { option: 'SEMAPHORE_USE_REMOTE_RUNNER',            var: "semaphore_use_remote_runner" }
+
+  - { option: 'SEMAPHORE_LDAP_ACTIVATED',     var: "semaphore_ldap_activated" }
+  - { option: 'SEMAPHORE_LDAP_HOST',          var: "semaphore_ldap_host" }
+  - { option: 'SEMAPHORE_LDAP_PORT',          var: "semaphore_ldap_port" }
+  - { option: 'SEMAPHORE_LDAP_NEEDTLS',       var: "semaphore_ldap_needtls" }
+  - { option: 'SEMAPHORE_LDAP_DN_BIND',       var: "semaphore_ldap_dn_bind" }
+  - { option: 'SEMAPHORE_LDAP_PASSWORD',      var: "semaphore_ldap_password" }
+  - { option: 'SEMAPHORE_LDAP_DN_SEARCH',     var: "semaphore_ldap_dn_search" }
+  - { option: 'SEMAPHORE_LDAP_SEARCH_FILTER', var: "semaphore_ldap_search_filter" }
+
+  - { option: 'SEMAPHORE_EMAIL_ALERT',    var: "semaphore_email_alert" }
+  - { option: 'SEMAPHORE_EMAIL_SENDER',   var: "semaphore_email_sender" }
+  - { option: 'SEMAPHORE_EMAIL_HOST',     var: "semaphore_email_host" }
+  - { option: 'SEMAPHORE_EMAIL_PORT',     var: "semaphore_email_port" }
+  - { option: 'SEMAPHORE_EMAIL_USERNAME', var: "semaphore_email_username" }
+  - { option: 'SEMAPHORE_EMAIL_PASSWORD', var: "semaphore_email_password" }
+  - { option: 'SEMAPHORE_EMAIL_SECURE',   var: "semaphore_email_secure" }
+
+  - { option: 'SEMAPHORE_TELEGRAM_ALERT',        var: "semaphore_telegram_alert" }
+  - { option: 'SEMAPHORE_TELEGRAM_CHAT',         var: "semaphore_telegram_chat" }
+  - { option: 'SEMAPHORE_TELEGRAM_TOKEN',        var: "semaphore_telegram_token" }
+  - { option: 'SEMAPHORE_SLACK_ALERT',           var: "semaphore_slack_alert" }
+  - { option: 'SEMAPHORE_SLACK_URL',             var: "semaphore_slack_url" }
+  - { option: 'SEMAPHORE_ROCKETCHAT_ALERT',      var: "semaphore_rocketchat_alert" }
+  - { option: 'SEMAPHORE_ROCKETCHAT_URL',        var: "semaphore_rocketchat_url" }
+  - { option: 'SEMAPHORE_MICROSOFT_TEAMS_ALERT', var: "semaphore_microsoft_teams_alert" }
+  - { option: 'SEMAPHORE_MICROSOFT_TEAMS_URL',   var: "semaphore_microsoft_teams_url" }
+  - { option: 'SEMAPHORE_DINGTALK_ALERT',        var: "semaphore_dingtalk_alert" }
+  - { option: 'SEMAPHORE_DINGTALK_URL',          var: "semaphore_dingtalk_url" }
+  - { option: 'SEMAPHORE_GOTIFY_ALERT',          var: "semaphore_gotify_alert" }
+  - { option: 'SEMAPHORE_GOTIFY_URL',            var: "semaphore_gotify_url" }
+  - { option: 'SEMAPHORE_GOTIFY_TOKEN',          var: "semaphore_gotify_token" }

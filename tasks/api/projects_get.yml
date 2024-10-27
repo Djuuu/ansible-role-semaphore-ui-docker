@@ -1,0 +1,13 @@
+---
+
+- name: Get projects
+  ansible.builtin.uri:
+    url: "{{ semaphore_api_base_url }}/projects"
+    headers:
+      Authorization: "Bearer {{ semaphore_token }}"
+    validate_certs: "{{ semaphore_api_validate_certs }}"
+  register: projects_response
+
+- name: Register projects
+  ansible.builtin.set_fact:
+    semaphore_projects: "{{ projects_response.json }}"

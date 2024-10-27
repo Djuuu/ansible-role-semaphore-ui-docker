@@ -1,0 +1,16 @@
+---
+
+- name: Authenticate
+  ansible.builtin.include_tasks: api/authenticate.yml
+
+
+- name: Get projects
+  ansible.builtin.include_tasks: api/projects_get.yml
+
+- name: Backup project
+  ansible.builtin.include_tasks: _backup_project.yml
+  loop: "{{ semaphore_projects }}"
+
+
+- name: Logout
+  ansible.builtin.include_tasks: api/logout.yml

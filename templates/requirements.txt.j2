@@ -1,0 +1,10 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+# {{ template_fullpath }}
+
+ansible
+
+
+{% for item in semaphore_python_requirements %}
+{{ item }}
+{% endfor %}

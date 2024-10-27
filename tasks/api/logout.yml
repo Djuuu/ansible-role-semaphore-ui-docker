@@ -1,0 +1,19 @@
+---
+
+- name: Destroy token
+  ansible.builtin.uri:
+    url: "{{ semaphore_api_base_url }}/user/tokens/{{ semaphore_token }}"
+    method: DELETE
+    headers:
+      Authorization: "Bearer {{ semaphore_token }}"
+    status_code: [204]
+    validate_certs: "{{ semaphore_api_validate_certs }}"
+
+- name: Logout
+  ansible.builtin.uri:
+    url: "{{ semaphore_api_base_url }}/auth/logout"
+    method: POST
+    headers:
+      Cookie: "{{ semaphore_cookie }}"
+    status_code: [204]
+    validate_certs: "{{ semaphore_api_validate_certs }}"
