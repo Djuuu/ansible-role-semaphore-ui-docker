@@ -16,6 +16,7 @@ var_naming_pattern: "^[a-z_][a-zA-Z0-9_]*$"
 # Optionally you can add comments after the tag, prefixed by "#". We discourage the use of skip_list below because that will hide violations from the output.
 # When putting ignores inside the ignore file, they are marked as ignored, but still visible, making it easier to address later.
 skip_list:
+  - jinja[spacing]
   - yaml[colons]
   - yaml[commas]
   - yaml[comments]
