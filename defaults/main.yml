@@ -4,7 +4,7 @@
 
 semaphore_project_name: semaphore
 
-# Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overriden)
+# Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overridden)
 
 semaphore_traefik_loadbalancer_server_port: 3000
 semaphore_traefik_entrypoints: http,https
