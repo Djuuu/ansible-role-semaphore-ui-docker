@@ -28,11 +28,15 @@ services:
       - postgres
       {% endif %}
 
+    {% if semaphore_network_mode == 'host' %}
+    network_mode: host
+    {% else %}
     networks:
       - default
       {% for item in semaphore_compose_additional_networks %}
       - {{ item }}
       {% endfor %}
+    {% endif %}
 
     {{ docker_project_compose_service_additional_options | indent(4) }}
 
@@ -56,6 +60,9 @@ services:
     restart: unless-stopped
     image: mysql:8.0
     hostname: mysql
+    {% if semaphore_network_mode == 'host' %}
+    network_mode: host
+    {% endif %}
     volumes:
       - semaphore-mysql:/var/lib/mysql
     environment:
@@ -69,6 +76,9 @@ services:
     restart: unless-stopped
     image: postgres:14
     hostname: postgres
+    {% if semaphore_network_mode == 'host' %}
+    network_mode: host
+    {% endif %}
     volumes:
       - semaphore-postgres:/var/lib/postgresql/data
     environment:
@@ -85,11 +95,13 @@ volumes:
   semaphore-postgres:
   {% endif %}
 
+{% if semaphore_network_mode != 'host' %}
 networks:
   {{ docker_project_default_network | indent(2) }}
   {% for item in semaphore_compose_additional_networks %}
   {{ item }}:
     external: true
   {% endfor %}
+{% endif %}
 
 {{ docker_project_compose_additional_options }}

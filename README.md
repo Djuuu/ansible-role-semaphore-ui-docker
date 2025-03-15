@@ -54,7 +54,10 @@ semaphore_compose_service_additional_options: |
 # semaphoreui/semaphore image version
 semaphore_version: latest
 
-# Additional external docker-compose networks
+# Semaphore network mode (bridge|host)
+semaphore_network_mode: bridge
+
+# Additional external docker-compose networks (bridge network mode)
 semaphore_compose_additional_networks: []
 #  - example_default
 
