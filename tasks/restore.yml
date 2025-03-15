@@ -1,0 +1,27 @@
+---
+
+- name: Restore project
+  delegate_to: localhost
+  block:
+
+    - name: Authenticate
+      ansible.builtin.include_tasks: api/authenticate.yml
+
+    - name: Get projects
+      ansible.builtin.include_tasks: api/projects_get.yml
+
+    - name: Show existing projects
+      ansible.builtin.debug: { var: semaphore_projects }
+
+    - name: Find backup files
+      ansible.builtin.find:
+        paths: "{{ semaphore_config_path }}"
+        patterns: '*.json'
+      register: backup_files
+
+    - name: Restore project
+      ansible.builtin.include_tasks: _restore_project.yml
+      loop: "{{ backup_files.files }}"
+
+    - name: Logout
+      ansible.builtin.include_tasks: api/logout.yml

@@ -1,0 +1,21 @@
+---
+
+- name: Ask for confirmation
+  ansible.builtin.pause:
+    prompt: "Restore {{ item.path | basename }} ? (yes/no)"
+  register: should_restore
+
+- name: Restore project file
+  when: (should_restore.user_input | lower == 'yes')
+    or (should_restore.user_input | lower == 'y')
+    or (should_restore.user_input | lower == 'true')
+  block:
+    - name: Load backup file
+      ansible.builtin.slurp:
+        src: "{{ item.path }}"
+      register: backup_slurp
+
+    - name: Restore project
+      vars:
+        backup_content: "{{ backup_slurp.content | b64decode }}"
+      ansible.builtin.include_tasks: api/project_restore.yml

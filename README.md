@@ -215,6 +215,18 @@ Backup projects:
         tasks_from: backup
 ```
 
+Restore projects:
+```yaml
+- hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Restore Semaphore UI projects
+      ansible.builtin.include_role:
+        name: djuuu.semaphore_ui_docker
+        tasks_from: restore
+```
+
 License
 -------
 
