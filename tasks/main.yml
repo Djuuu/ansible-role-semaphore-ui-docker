@@ -40,7 +40,7 @@
   ansible.builtin.lineinfile:
     path: "{{ docker_project_path }}/.env"
     regexp: '^#?\s*{{ item.option }}\s*=.*$'
-    line: "{{ item.option }}={{ vars[item.var] }}"
+    line: "{{ item.option }}={{ lookup('ansible.builtin.vars', item.var, default='') }}"
   no_log: "{{ item.option == 'SEMAPHORE_DB_PASS'
            or item.option == 'SEMAPHORE_ADMIN_PASSWORD'
            or item.option == 'SEMAPHORE_COOKIE_HASH'
