@@ -54,6 +54,11 @@ semaphore_compose_service_additional_options: |
 # semaphoreui/semaphore image version
 semaphore_version: latest
 
+# UID container is running as
+semaphore_puid: "{{ ansible_user_uid }}"
+# GID container is running as
+semaphore_pgid: "{{ ansible_user_gid }}"
+
 # Semaphore network mode (bridge|host)
 semaphore_network_mode: bridge
 

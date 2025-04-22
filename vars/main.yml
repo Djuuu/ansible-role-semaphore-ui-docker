@@ -6,8 +6,8 @@ semaphore_env:
 
   - { option: 'SEMAPHORE_VERSION', var: "semaphore_version" }
 
-  - { option: 'USER_ID',  var: "ansible_user_uid" }
-  - { option: 'GROUP_ID', var: "ansible_user_gid" }
+  - { option: 'USER_ID',  var: "semaphore_puid" }
+  - { option: 'GROUP_ID', var: "semaphore_pgid" }
 
   - { option: 'SEMAPHORE_PORT',       var: "semaphore_port" }
   - { option: 'SEMAPHORE_INTERFACE',  var: "semaphore_interface" }
