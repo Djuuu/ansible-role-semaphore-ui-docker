@@ -3,18 +3,26 @@
 - name: Backup project
   ansible.builtin.include_tasks: api/project_backup.yml
 
-- name: "Save current project config: {{ item.name }}"
-  ansible.builtin.copy:
-    content: "{{ semaphore_project_backup | to_nice_json(sort_keys=false) }}"
-    dest: "{{ semaphore_config_path }}/{{ item.name }}.json"
-    mode: '0664'
-  delegate_to: localhost
-  register: config_save_result
+- name: Backup current project config
+  become: "{{ (semaphore_backup_become | default(false))
+           or (semaphore_backup_owner | default(ansible_user_id, true) != ansible_user_id) }}"
+  delegate_to: "{{ local | default(false) | ternary('localhost', inventory_hostname) }}"
+  block:
 
-- name: "Save project backup: {{ item.name }}" # noqa: no-handler (task is run in loop)
-  ansible.builtin.copy:
-    content: "{{ semaphore_project_backup | to_nice_json(sort_keys=false) }}"
-    dest: "{{ semaphore_backup_path }}/{{ item.name }}-{{ now(fmt='%Y-%m-%d-%H%M%S') }}.json"
-    mode: '0664'
-  delegate_to: localhost
-  when: config_save_result.changed
+    - name: "Save current project config: {{ item.name }}"
+      ansible.builtin.copy:
+        content: "{{ semaphore_project_backup | to_nice_json(sort_keys=false) }}\n"
+        dest: "{{ semaphore_config_path }}/{{ item.name }}.json"
+        owner: "{{ semaphore_backup_owner | default(omit, true) }}"
+        group: "{{ semaphore_backup_group | default(omit, true) }}"
+        mode: "{{ semaphore_backup_mode | default(omit, true) }}"
+      register: config_save_result
+
+    - name: "Save project backup: {{ item.name }}" # noqa: no-handler (task is run in loop)
+      ansible.builtin.copy:
+        content: "{{ semaphore_project_backup | to_nice_json(sort_keys=false) }}\n"
+        dest: "{{ semaphore_backup_path }}/{{ item.name }}-{{ now(fmt='%Y-%m-%d-%H%M%S') }}.json"
+        owner: "{{ semaphore_backup_owner | default(omit, true) }}"
+        group: "{{ semaphore_backup_group | default(omit, true) }}"
+        mode: "{{ semaphore_backup_mode | default(omit, true) }}"
+      when: config_save_result.changed
