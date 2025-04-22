@@ -129,7 +129,7 @@ semaphore_forwarded_env_vars:
 # Semaphore variables (backup)
 
 # Semaphore UI API base URL
-semaphore_api_base_url: "https://{{ docker_project_slug }}.{{ local_base_domain }}/api"
+semaphore_api_base_url: "https://{{ docker_project_slug }}.{{ exposed_base_domain | default(local_base_domain, true) }}/api"
 # Check Semaphore UI certificates
 semaphore_api_validate_certs: true
 
@@ -137,6 +137,13 @@ semaphore_api_validate_certs: true
 semaphore_config_path: "{{ playbook_dir }}/config/semaphore"
 # Location of archived (previous) backup files
 semaphore_backup_path: "{{ playbook_dir }}/config/semaphore/backup"
+
+# Backup file options
+semaphore_backup_owner:
+semaphore_backup_group:
+semaphore_backup_mode:
+# Can be useful to force to true when destination filesystem is not posix-compatible (ex: SMB share)
+semaphore_backup_become: false
 ```
 
 ```yaml
@@ -211,9 +218,20 @@ Install Semaphore UI:
 Backup projects:
 ```yaml
 - hosts: all
-  gather_facts: false
+  gather_facts: true
+  gather_subset:
+    - "!all"
+    - "!min"
+    - user_id
   
   tasks:
+
+    - name: Local backup to playbook configuration
+      when: "{{ local | default(false) }}"
+      ansible.builtin.set_fact:
+        semaphore_config_path: "{{ playbook_dir }}/config/semaphore"
+        semaphore_backup_path: "{{ playbook_dir }}/config/semaphore/backup"
+
     - name: Backup Semaphore UI projects
       ansible.builtin.include_role:
         name: djuuu.semaphore_ui_docker
