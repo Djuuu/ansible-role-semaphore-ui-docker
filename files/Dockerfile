@@ -4,6 +4,7 @@ ARG SEMAPHORE_VERSION=latest
 FROM semaphoreui/semaphore:${SEMAPHORE_VERSION} as semaphoreui-user
 
 ARG USER_ID=1001
+ARG TZ=UTC
 
 ################################################################################
 # Change semaphore user uid
@@ -37,5 +38,11 @@ RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${USER_ID:-0} -ne 1001 ]; then \
     \
     echo "User changed" \
 ;fi
+
+# Set system timezone
+RUN if [ -f "/usr/share/zoneinfo/${TZ}" ]; then \
+    echo "Setting timezone: ${TZ}"; \
+    ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime; \
+fi
 
 USER semaphore

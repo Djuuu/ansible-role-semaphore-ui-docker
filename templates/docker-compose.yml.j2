@@ -13,8 +13,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        USER_ID:           $USER_ID
         SEMAPHORE_VERSION: ${SEMAPHORE_VERSION:-{{ semaphore_version }}}
+        USER_ID:           $USER_ID
+        TZ:                ${TZ:-UTC}
       target: semaphoreui-user
     pull_policy: build
     user: "${USER_ID}:${GROUP_ID}"

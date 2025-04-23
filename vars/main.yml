@@ -8,6 +8,7 @@ semaphore_env:
 
   - { option: 'USER_ID',  var: "semaphore_puid" }
   - { option: 'GROUP_ID', var: "semaphore_pgid" }
+  - { option: 'TZ',       var: "semaphore_timezone" }
 
   - { option: 'SEMAPHORE_PORT',       var: "semaphore_port" }
   - { option: 'SEMAPHORE_INTERFACE',  var: "semaphore_interface" }
@@ -25,8 +26,6 @@ semaphore_env:
   - { option: 'SEMAPHORE_COOKIE_HASH',           var: "semaphore_cookie_hash" }
   - { option: 'SEMAPHORE_COOKIE_ENCRYPTION',     var: "semaphore_cookie_encryption" }
   - { option: 'SEMAPHORE_ACCESS_KEY_ENCRYPTION', var: "semaphore_access_key_encryption" }
-
-  - { option: 'SEMAPHORE_TIMEZONE', var: "semaphore_timezone" }
 
   - { option: 'SEMAPHORE_ADMIN_NAME',     var: "semaphore_admin_name" }
   - { option: 'SEMAPHORE_ADMIN_EMAIL',    var: "semaphore_admin_email" }
