@@ -10,6 +10,8 @@ semaphore_env:
   - { option: 'GROUP_ID', var: "semaphore_pgid" }
   - { option: 'TZ',       var: "semaphore_timezone" }
 
+  - { option: 'SEMAPHORE_SCHEDULE_TIMEZONE', var: "semaphore_schedule_timezone" }
+
   - { option: 'SEMAPHORE_PORT',       var: "semaphore_port" }
   - { option: 'SEMAPHORE_INTERFACE',  var: "semaphore_interface" }
   - { option: 'SEMAPHORE_TMP_PATH',   var: "semaphore_tmp_path" }
