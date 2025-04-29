@@ -46,6 +46,8 @@ semaphore_env:
   - { option: 'SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT', var: "semaphore_non_admin_can_create_project" }
   - { option: 'SEMAPHORE_USE_REMOTE_RUNNER',            var: "semaphore_use_remote_runner" }
 
+  - { option: 'SEMAPHORE_OIDC_PROVIDERS', var: "semaphore_oidc_providers" }
+
   - { option: 'SEMAPHORE_LDAP_ACTIVATED',     var: "semaphore_ldap_activated" }
   - { option: 'SEMAPHORE_LDAP_HOST',          var: "semaphore_ldap_host" }
   - { option: 'SEMAPHORE_LDAP_PORT',          var: "semaphore_ldap_port" }

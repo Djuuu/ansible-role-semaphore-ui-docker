@@ -159,6 +159,15 @@ semaphore_backup_become: false
 #semaphore_non_admin_can_create_project:
 #semaphore_use_remote_runner:
 
+#semaphore_oidc_providers: >-
+#  '{
+#    "github": {
+#      "client_id": "***",
+#      "client_secret": "***",
+#      // ...
+#    }
+#  }'
+
 #semaphore_ldap_activated:     'no'
 #semaphore_ldap_host:
 #semaphore_ldap_port:
