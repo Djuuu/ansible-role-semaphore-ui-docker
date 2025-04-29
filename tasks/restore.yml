@@ -6,6 +6,7 @@
 
     - name: Authenticate
       ansible.builtin.include_tasks: api/authenticate.yml
+      when: not semaphore_has_api_token
 
     - name: Get projects
       ansible.builtin.include_tasks: api/projects_get.yml
@@ -25,3 +26,4 @@
 
     - name: Logout
       ansible.builtin.include_tasks: api/logout.yml
+      when: not semaphore_has_api_token

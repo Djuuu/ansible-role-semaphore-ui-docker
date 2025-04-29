@@ -77,3 +77,9 @@ semaphore_env:
   - { option: 'SEMAPHORE_GOTIFY_ALERT',          var: "semaphore_gotify_alert" }
   - { option: 'SEMAPHORE_GOTIFY_URL',            var: "semaphore_gotify_url" }
   - { option: 'SEMAPHORE_GOTIFY_TOKEN',          var: "semaphore_gotify_token" }
+
+# Indicates if an API token is available in vars
+semaphore_has_api_token: "{{ semaphore_api_token | default('', true) | length > 0 }}"
+
+# Actual token used in API calls (from var or generated through authentication if empty)
+semaphore_token: "{{ semaphore_api_token | default('', true) }}"
