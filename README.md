@@ -124,10 +124,14 @@ semaphore_forwarded_env_vars:
 ```
 
 ```yaml
-# Semaphore variables (backup)
+# Semaphore variables (backup / restore)
 
 # Semaphore UI API base URL
 semaphore_api_base_url: "https://{{ docker_project_slug }}.{{ exposed_base_domain | default(local_base_domain, true) }}/api"
+
+# Semaphore UI API token (will be generated through admin authentication if empty)
+semaphore_api_token:
+
 # Check Semaphore UI certificates
 semaphore_api_validate_certs: true
 
