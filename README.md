@@ -37,13 +37,17 @@ semaphore_project_name: semaphore
 
 # Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overridden)
 
+# Additional external docker-compose networks, joined by main service
+semaphore_additional_networks: []
+#  - example_default
+
 semaphore_traefik_loadbalancer_server_port: 3000
 semaphore_traefik_entrypoints: http,https
 semaphore_traefik_middlewares:
   - "internal-access@file"
 
 # Main service additional docker-compose options (ex: cpu_shares, deploy, ...)
-semaphore_compose_service_additional_options: |
+semaphore_service_additional_options: |
   #ports:
   #  - 3000:3000
 ```
@@ -58,13 +62,6 @@ semaphore_version: latest
 semaphore_puid: "{{ ansible_user_uid }}"
 # GID container is running as
 semaphore_pgid: "{{ ansible_user_gid }}"
-
-# Semaphore network mode (bridge|host)
-semaphore_network_mode: bridge
-
-# Additional external docker-compose networks (bridge network mode)
-semaphore_compose_additional_networks: []
-#  - example_default
 
 # Required Python modules (note: ansible is included by default)
 semaphore_python_requirements: []
