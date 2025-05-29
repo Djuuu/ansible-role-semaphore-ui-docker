@@ -50,7 +50,7 @@ services:
 
   {% if semaphore_db_dialect == 'mysql' %}
   mysql:
-    image: mysql:8.0
+    image: mysql:{{ semaphore_mysql_version }}
     restart: {{ docker_project_restart }}
     hostname: mysql
     {% if docker_project_network_mode != 'bridge' %}
@@ -66,7 +66,7 @@ services:
   {% endif %}
   {% if semaphore_db_dialect == 'postgres' %}
   postgres:
-    image: postgres:14
+    image: postgres:{{ semaphore_postgres_version }}
     restart: {{ docker_project_restart }}
     hostname: postgres
     {% if docker_project_network_mode != 'bridge' %}

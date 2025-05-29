@@ -90,6 +90,11 @@ semaphore_db:      semaphore
 semaphore_db_user: semaphore
 semaphore_db_pass: semaphore
 
+# Mysql image version (when semaphore_db_dialect = mysql)
+semaphore_mysql_version: 8.4
+# Postgres image version (when semaphore_db_dialect = postgres)
+semaphore_postgres_version: 17
+
 #semaphore_cookie_hash:
 #semaphore_cookie_encryption:
 
