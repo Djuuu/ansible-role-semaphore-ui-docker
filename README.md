@@ -240,7 +240,7 @@ Backup projects:
   tasks:
 
     - name: Local backup to playbook configuration
-      when: "{{ local | default(false) }}"
+      when: local | default(false)
       ansible.builtin.set_fact:
         semaphore_config_path: "{{ playbook_dir }}/config/semaphore"
         semaphore_backup_path: "{{ playbook_dir }}/config/semaphore/backup"
