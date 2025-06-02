@@ -47,8 +47,7 @@ services:
 
     labels:
       {{ traefik_project_base_labels | indent(6) }}
-      # What's up Docker? - https://github.com/getwud/wud
-      wud.watch.digest: true
+      {{ docker_project_service_additional_labels | indent(6) }}
 
   {% if semaphore_db_dialect == 'mysql' %}
   mysql:
@@ -65,10 +64,10 @@ services:
       MYSQL_DATABASE: $SEMAPHORE_DB
       MYSQL_USER:     $SEMAPHORE_DB_USER
       MYSQL_PASSWORD: $SEMAPHORE_DB_PASS
+    {% if semaphore_mysql_service_additional_labels %}
     labels:
-      # What's up Docker? - https://github.com/getwud/wud
-      wud.tag.include: ^\d+\.\d+$$
-      wud.watch.digest: true
+      {{ semaphore_mysql_service_additional_labels | indent(6) }}
+    {% endif %}
   {% endif %}
   {% if semaphore_db_dialect == 'postgres' %}
   postgres:
@@ -84,10 +83,10 @@ services:
       POSTGRES_DB:       $SEMAPHORE_DB
       POSTGRES_USER:     $SEMAPHORE_DB_USER
       POSTGRES_PASSWORD: $SEMAPHORE_DB_PASS
+    {% if semaphore_postgres_service_additional_labels %}
     labels:
-      # What's up Docker? - https://github.com/getwud/wud
-      wud.tag.include: ^\d+$$
-      wud.watch.digest: true
+      {{ semaphore_postgres_service_additional_labels | indent(6) }}
+    {% endif %}
   {% endif %}
 
 volumes:

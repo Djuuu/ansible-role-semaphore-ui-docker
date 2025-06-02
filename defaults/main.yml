@@ -20,6 +20,11 @@ semaphore_service_additional_options: |
   #ports:
   #  - 3000:3000
 
+# MySQL service additional docker-compose labels (ex: wud.tag.include, ...)
+semaphore_mysql_service_additional_labels: ""
+# PostgreSQL service additional docker-compose labels (ex: wud.tag.include, ...)
+semaphore_postgres_service_additional_labels: ""
+
 
 # Semaphore project variables
 
