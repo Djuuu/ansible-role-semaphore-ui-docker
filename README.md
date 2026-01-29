@@ -59,9 +59,9 @@ semaphore_service_additional_options: |
 semaphore_version: latest
 
 # UID container is running as
-semaphore_puid: "{{ ansible_user_uid }}"
+semaphore_puid: "{{ ansible_facts['user_uid'] }}"
 # GID container is running as
-semaphore_pgid: "{{ ansible_user_gid }}"
+semaphore_pgid: "{{ ansible_facts['user_gid'] }}"
 
 # Required Python modules (note: ansible is included by default)
 semaphore_python_requirements: []

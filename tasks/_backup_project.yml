@@ -5,7 +5,7 @@
 
 - name: Backup current project config
   become: "{{ (semaphore_backup_become | default(false))
-           or (semaphore_backup_owner | default(ansible_user_id, true) != ansible_user_id) }}"
+           or (semaphore_backup_owner | default(ansible_facts['user_id'], true) != ansible_facts['user_id']) }}"
   delegate_to: "{{ local | default(false) | ternary('localhost', inventory_hostname) }}"
   block:
 
