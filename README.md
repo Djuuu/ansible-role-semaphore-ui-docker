@@ -50,6 +50,11 @@ semaphore_traefik_middlewares:
 semaphore_service_additional_options: |
   #ports:
   #  - 3000:3000
+
+# MySQL service additional docker-compose labels (ex: wud.tag.include, ...)
+semaphore_mysql_service_additional_labels: ""
+# PostgreSQL service additional docker-compose labels (ex: wud.tag.include, ...)
+semaphore_postgres_service_additional_labels: ""
 ```
 
 ```yaml
@@ -62,6 +67,8 @@ semaphore_version: latest
 semaphore_puid: "{{ ansible_facts['user_uid'] }}"
 # GID container is running as
 semaphore_pgid: "{{ ansible_facts['user_gid'] }}"
+# System timezone
+semaphore_timezone: UTC
 
 # Required Python modules (note: ansible is included by default)
 semaphore_python_requirements: []
@@ -71,54 +78,47 @@ semaphore_playbook_mounts: []
 #  # Mount current playbook
 #  - src: "{{ playbook_dir }}"
 #    dest: "/home/semaphore/{{ playbook_dir | basename }}"
-```
-
-```yaml
-# Semaphore variables
-
-#semaphore_port: 3000
-#semaphore_interface:
-#semaphore_tmp_path: /tmp/semaphore
-#semaphore_git_client: cmd_git
-#semaphore_web_root:
-
-semaphore_db_dialect: postgres # postgres|mysql|bolt
-semaphore_db_host:    postgres
-semaphore_db_port:    5432     # 5432|3306|
-
-semaphore_db:      semaphore
-semaphore_db_user: semaphore
-semaphore_db_pass: semaphore
 
 # Mysql image version (when semaphore_db_dialect = mysql)
 semaphore_mysql_version: 8.4
 # Postgres image version (when semaphore_db_dialect = postgres)
 semaphore_postgres_version: 18
+```
 
-#semaphore_cookie_hash:
-#semaphore_cookie_encryption:
-
-# Generate key:
-#   head -c32 /dev/urandom | base64
-# Rekey database secrets:
-#   semaphore --config /etc/semaphore/config.json vault rekey --old-key <previous-encryption-key>
-semaphore_access_key_encryption: "gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU="
-
-semaphore_timezone: UTC
-semaphore_schedule_timezone: "{{ semaphore_timezone }}"
-
+```yaml
 # Administrator account
 semaphore_admin_name:     Admin
 semaphore_admin_email:    admin@example.net
 semaphore_admin:          admin
 semaphore_admin_password: changeme
 
+# Database
+semaphore_db_dialect: postgres  # postgres | mysql | sqlite
+semaphore_db_host:    postgres
+semaphore_db_name:    semaphore
+semaphore_db_user:    semaphore
+semaphore_db_pass:    semaphore
+semaphore_db_port:    5432      # 5432 | 3306
+semaphore_db_options:
+  sslmode: disable
+
 # Should Ansible check host keys when connecting
 semaphore_ansible_host_key_checking: false
 
+# Security
+# Generate key:
+#   head -c32 /dev/urandom | base64
+# Rekey database secrets:
+#   semaphore --config /etc/semaphore/config.json vault rekey --old-key <previous-encryption-key>
+semaphore_access_key_encryption: "gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU="
+#semaphore_option_encryption:
+#semaphore_cookie_hash:
+#semaphore_cookie_encryption:
+
+semaphore_schedule_timezone: "{{ semaphore_timezone }}"
+
 # environment variables which will be available for apps (Ansible, Terraform, etc).
-semaphore_env_vars: {}
-#  VAR_NAME: value
+#semaphore_env_vars: {}
 
 # environment variables which will be forwarded from system
 semaphore_forwarded_env_vars:
@@ -151,15 +151,22 @@ semaphore_backup_become: false
 ```
 
 ```yaml
-# Semaphore variables (optional)
+# Additional Semaphore configuration variables
 
+#semaphore_git_client:            cmd_git # cmd_git | go_git
+#semaphore_ssh_path:              ~/.ssh/config.
+#semaphore_port:                  3000
+#semaphore_interface:
+
+#semaphore_tmp_path:              /tmp/semaphore
+#semaphore_secrets_path:          /tmp/semaphore
+#semaphore_repos_dir:
+#semaphore_ssh_agent_sockets_dir: /tmp/semaphore
+#semaphore_home_dir_mode:         template_dir # template_dir | project_home | user_home
+
+#semaphore_max_parallel_tasks:    9999
 #semaphore_max_task_duration_sec:
 #semaphore_max_tasks_per_template:
-#semaphore_max_parallel_tasks:
-
-#semaphore_password_login_disabled:
-#semaphore_non_admin_can_create_project:
-#semaphore_use_remote_runner:
 
 #semaphore_oidc_providers: >-
 #  '{
@@ -170,37 +177,113 @@ semaphore_backup_become: false
 #    }
 #  }'
 
-#semaphore_ldap_activated:     'no'
-#semaphore_ldap_host:
-#semaphore_ldap_port:
-#semaphore_ldap_needtls:
-#semaphore_ldap_dn_bind:
-#semaphore_ldap_password:
-#semaphore_ldap_dn_search:
-#semaphore_ldap_search_filter:
+#semaphore_password_login_disabled:
+#semaphore_non_admin_can_create_project:
 
-#semaphore_email_alert:
+#semaphore_apps: {}
+
+#semaphore_use_remote_runner:
+#semaphore_runner_registration_token:
+
+## JWT
+#semaphore_jwt_enabled:
+#semaphore_jwt_issuer:
+#semaphore_jwt_default_ttl: 1h
+#semaphore_jwt_max_ttl: 24h
+
+## Runner
+
+## Runners (server-side fleet)
+
+## Teams
+#semaphore_teams_invites_enabled:
+#semaphore_teams_invite_type: username # username | email | both
+#semaphore_teams_members_can_leave:
+
+## Security
+
+#semaphore_web_root:
+
+#semaphore_tls_enabled:
+#semaphore_tls_cert_file:
+#semaphore_tls_key_file:
+#semaphore_tls_http_redirect_addr:
+#semaphore_tls_http_redirect_port:
+
+#semaphore_totp_enabled:
+#semaphore_totp_issuer:
+#semaphore_totp_allow_recovery:
+
+#semaphore_email_2tp_enabled:
+#semaphore_email_2tp_allow_login_as_external_user:
+#semaphore_email_2tp_allow_create_external_user:
+#semaphore_email_2tp_allowed_domains: []
+#semaphore_email_2tp_disable_for_oidc:
+
+## Metrics
+#semaphore_metrics_enabled:
+#semaphore_metrics_username:
+#semaphore_metrics_password:
+
+## Encryption
+#semaphore_encryption_keys_file:
+#semaphore_encryption_keys_poll_interval:
+
+## Process
+#semaphore_process_user:
+#semaphore_process_uid:
+#semaphore_process_gid:
+#semaphore_process_chroot:
+#semaphore_process_no_new_privs:
+#semaphore_process_app_ns_user:
+#semaphore_process_app_ns_mount:
+#semaphore_process_app_ns_pid:
+#semaphore_process_app_ns_ipc:
+#semaphore_process_app_ns_uts:
+
+## Email
 #semaphore_email_sender:
 #semaphore_email_host:
 #semaphore_email_port:
+#semaphore_email_secure:
+#semaphore_email_tls:
+#semaphore_email_tls_min_version:
 #semaphore_email_username:
 #semaphore_email_password:
-#semaphore_email_secure:
+#semaphore_email_alert:
 
+## Messengers
 #semaphore_telegram_alert:
 #semaphore_telegram_chat:
 #semaphore_telegram_token:
 #semaphore_slack_alert:
 #semaphore_slack_url:
-#semaphore_rocketchat_alert:
-#semaphore_rocketchat_url:
 #semaphore_microsoft_teams_alert:
 #semaphore_microsoft_teams_url:
+#semaphore_rocketchat_alert:
+#semaphore_rocketchat_url:
 #semaphore_dingtalk_alert:
 #semaphore_dingtalk_url:
 #semaphore_gotify_alert:
 #semaphore_gotify_url:
 #semaphore_gotify_token:
+
+## LDAP
+#semaphore_ldap_enable:
+#semaphore_ldap_needtls:
+#semaphore_ldap_bind_dn:
+#semaphore_ldap_bind_password:
+#semaphore_ldap_server:
+#semaphore_ldap_search_dn:
+#semaphore_ldap_search_filter:
+#semaphore_ldap_mapping_dn:
+#semaphore_ldap_mapping_mail:
+#semaphore_ldap_mapping_uid:
+#semaphore_ldap_mapping_cn:
+
+## Logging
+#semaphore_log_level:
+#semaphore_debug_filter:
 ```
 
 Dependencies

@@ -61,7 +61,7 @@ services:
       - semaphore-mysql:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_DATABASE: $SEMAPHORE_DB
+      MYSQL_DATABASE: $SEMAPHORE_DB_NAME
       MYSQL_USER:     $SEMAPHORE_DB_USER
       MYSQL_PASSWORD: $SEMAPHORE_DB_PASS
     {% if semaphore_mysql_service_additional_labels %}
@@ -80,7 +80,7 @@ services:
     volumes:
       - semaphore-postgres:/var/lib/postgresql
     environment:
-      POSTGRES_DB:       $SEMAPHORE_DB
+      POSTGRES_DB:       $SEMAPHORE_DB_NAME
       POSTGRES_USER:     $SEMAPHORE_DB_USER
       POSTGRES_PASSWORD: $SEMAPHORE_DB_PASS
     {% if semaphore_postgres_service_additional_labels %}

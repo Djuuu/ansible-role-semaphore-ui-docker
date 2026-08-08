@@ -35,6 +35,9 @@
   ansible.builtin.set_fact:
     semaphore_env_vars_json: "{{ semaphore_env_vars | default({}) | to_json }}"
     semaphore_forwarded_env_vars_json: "{{ semaphore_forwarded_env_vars | default([]) | to_json }}"
+    semaphore_apps_json: "{{ semaphore_apps | default({}) | to_json }}"
+    semaphore_db_options_json: "{{ semaphore_db_options | default({}) | to_json }}"
+    semaphore_email_2tp_allowed_domains_json: "{{ semaphore_email_2tp_allowed_domains | default([]) | to_json }}"
 
 - name: Configure .env
   ansible.builtin.lineinfile:
@@ -46,7 +49,8 @@
            or item.option == 'SEMAPHORE_COOKIE_HASH'
            or item.option == 'SEMAPHORE_COOKIE_ENCRYPTION'
            or item.option == 'SEMAPHORE_ACCESS_KEY_ENCRYPTION'
-           or item.option == 'SEMAPHORE_LDAP_PASSWORD' }}"
+           or item.option == 'SEMAPHORE_LDAP_PASSWORD'
+           or item.option == 'SEMAPHORE_METRICS_PASSWORD' }}"
   when: vars[item.var] is defined
   loop: "{{ semaphore_env }}"
 
